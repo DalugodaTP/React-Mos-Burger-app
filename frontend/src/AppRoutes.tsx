@@ -3,6 +3,7 @@ import Layout from "./layouts/layout";
 import HomePage from "./pages/HomePage";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -17,17 +18,20 @@ const AppRoutes = () => {
         }
       />
       <Route path="/auth-callback" element={<AuthCallbackPage />} />
-      {/* User Profiles */}
-      <Route
-        path="/user-profile"
-        element={
-          <Layout>
-            <UserProfilePage />
-          </Layout>
-        }
-      />
-      {/* If the user types in something not from the above then they will be automatically redirected to the homepage */}
-      <Route path="*" element={<Navigate to="/" />} />{" "}
+
+      <Route element={<ProtectedRoute />}>
+        {/* User Profiles */}
+        <Route
+          path="/user-profile"
+          element={
+            <Layout>
+              <UserProfilePage />
+            </Layout>
+          }
+        />
+        {/* If the user types in something not from the above then they will be automatically redirected to the homepage */}
+        <Route path="*" element={<Navigate to="/" />} />{" "}
+      </Route>
     </Routes>
   );
 };
